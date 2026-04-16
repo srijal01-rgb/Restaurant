@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Menu | Restaurant{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <h2 class="text-center mb-5 fw-bold">Our Delicious Menu</h2>
+
+    {% if categories %}
+        {% for category in categories %}
+
+            <h3 class="mt-5 mb-3 border-bottom pb-2">
+                {{ category.name }}
+            </h3>
+
+            <div class="row">
+                {% for item in category.items.all %}
+
+                    <div class="col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100 shadow-sm border-0">
+
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" 
+                                     class="card-img-top" 
+                                     alt="{{ item.name }}"
+                                     style="height: 200px; object-fit: cover;">
+                            {% endif %}
+
+                            <div class="card-body d-flex flex-column">
+
+                                <h5 class="card-title fw-semibold">
+                                    {{ item.name }}
+                                </h5>
+
+                                <p class="card-text text-muted small">
+                                    {{ item.description }}
+                                </p>
+
+                                <div class="mt-auto">
+
+                                    <p class="fw-bold text-primary mb-2">
+                                        Rs. {{ item.price }}
+                                    </p>
+
+                                    {% if item.available %}
+                                        <span class="badge bg-success">Available</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Not Available</span>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% empty %}
+                    <p class="text-muted">No items in this category.</p>
+                {% endfor %}
+            </div>
+
+        {% endfor %}
+    {% else %}
+        <p class="text-center text-muted">No categories found.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

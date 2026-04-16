@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+{% block title %}Home | Restaurant{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="overlay d-flex align-items-center">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold">Delicious Food, Great Experience</h1>
+            <p class="lead">Fresh meals, cozy atmosphere, and quick service.</p>
+            <a href="{% url 'menu' %}" class="btn btn-warning btn-lg me-2">View Menu</a>
+            <a href="{% url 'book' %}" class="btn btn-outline-light btn-lg">Book a Table</a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="mb-4 text-center">Featured Dishes</h2>
+        <div class="row">
+            {% for item in featured_items %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text">{{ item.description|truncatewords:15 }}</p>
+                        <p class="fw-bold">Rs. {{ item.price }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No featured items available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
