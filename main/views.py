@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from main.models import *
 
 # Create your views here.
 def base(request):
@@ -12,7 +13,8 @@ def book(request):
      return render(request, "main/book.html")
 
 def menu(request):
-     return render(request, "main/menu.html")
+     categories = Category.objects.all()
+     return render(request, "main/menu.html", { "categories": categories})
 
 def about(request):
      return render(request,"main/about.html")
